@@ -45,7 +45,10 @@ const state = {
   revealed: false,
   locked: false,
   stats: { correct: 0, total: 0, streak: 0 },
-  flashSide: "name-first" // or "details-first"
+  flashSide: "name-first", // or "details-first"
+  progress: {}, // per-pledge stats
+  history: [], // last 20 booleans
+  theme: "dark"
 };
 
 const els = {
@@ -59,22 +62,29 @@ const els = {
   btnReveal: document.getElementById("btn-reveal"),
   btnNext: document.getElementById("btn-next"),
   btnFlip: document.getElementById("btn-flip"),
+  btnHint: document.getElementById("btn-hint"),
+  btnTheme: document.getElementById("btn-theme"),
   manualScore: document.getElementById("manual-score"),
   statAccuracy: document.getElementById("stat-accuracy"),
   statStreak: document.getElementById("stat-streak"),
   statRounds: document.getElementById("stat-rounds"),
+  modeAccuracy: document.getElementById("mode-accuracy"),
+  hardest: document.getElementById("hardest"),
   quicklist: document.getElementById("quicklist"),
   filter: document.getElementById("filter"),
   modeButtons: [...document.querySelectorAll(".chip")]
 };
 
 function init() {
+  loadProgress();
   els.modeButtons.forEach(btn =>
     btn.addEventListener("click", () => switchMode(btn.dataset.mode))
   );
   els.btnReveal.addEventListener("click", reveal);
   els.btnNext.addEventListener("click", () => pickCard());
   els.btnFlip.addEventListener("click", flipFlash);
+  els.btnHint.addEventListener("click", showHint);
+  els.btnTheme.addEventListener("click", toggleTheme);
   els.manualScore.addEventListener("click", e => {
     if (e.target.dataset.mark) {
       const isCorrect = e.target.dataset.mark === "got";
@@ -88,10 +98,19 @@ function init() {
       e.preventDefault();
       reveal();
     }
-    if (e.key === "ArrowRight") pickCard();
+    if (e.key === "ArrowRight" || e.key === "n") pickCard();
+    if (e.key.toLowerCase() === "f") flipFlash();
+    if (e.key.toLowerCase() === "h") showHint();
+    if (e.key === "r") reveal();
+    if (["1", "2", "3", "4"].includes(e.key)) {
+      const idx = Number(e.key) - 1;
+      const btn = document.querySelectorAll(".option-btn")[idx];
+      if (btn) btn.click();
+    }
   });
 
   renderQuicklist();
+  renderDash();
   pickCard(true);
 }
 
@@ -104,14 +123,8 @@ function switchMode(mode) {
 
 function pickCard(firstLoad = false) {
   const previousId = state.current?.id;
-  let candidate = pledges[Math.floor(Math.random() * pledges.length)];
+  const candidate = weightedPick(previousId);
   const middles = pledges.filter(p => p.middle);
-  // avoid repeat if possible
-  if (pledges.length > 1) {
-    while (candidate.id === previousId) {
-      candidate = pledges[Math.floor(Math.random() * pledges.length)];
-    }
-  }
 
   state.current = candidate;
   state.ask = resolveAsk(state.mode);
@@ -129,12 +142,12 @@ function pickCard(firstLoad = false) {
   state.locked = false;
 
   renderCard();
-  if (!firstLoad && state.mode !== "flash") window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function renderCard() {
   const { current, ask, mode } = state;
   if (!current) return;
+  document.querySelectorAll(".hint-line").forEach(el => el.remove());
 
   const fullName = `${current.first} ${current.middle ? current.middle + " " : ""}${current.last}`;
   const masked =
@@ -265,7 +278,12 @@ function finishRound(isCorrect) {
   state.stats.total += 1;
   state.stats.correct += isCorrect ? 1 : 0;
   state.stats.streak = isCorrect ? state.stats.streak + 1 : 0;
+  trackProgress(state.current.id, isCorrect, state.ask);
+  pushHistory(isCorrect);
+  saveProgress();
   updateStats();
+  renderDash();
+  if (isCorrect) celebrate();
 }
 
 function updateStats() {
@@ -335,6 +353,148 @@ function flipFlash() {
   renderCard();
 }
 
+function showHint() {
+  if (!state.current || state.mode === "flash") return;
+  document.querySelectorAll(".hint-line").forEach(el => el.remove());
+  const key =
+    state.ask === "home"
+      ? state.current.hometown
+      : state.ask === "major"
+      ? state.current.major
+      : state.ask === "middle"
+      ? state.current.middle || ""
+      : state.current.last;
+  if (!key) return;
+  const words = key.split(" ");
+  const first = words[0];
+  const hint = first ? `${first[0].toUpperCase()}… (${words.length} word${words.length > 1 ? "s" : ""})` : "No hint";
+  els.options.insertAdjacentHTML(
+    "beforebegin",
+    `<p class="value hint-line" style="margin:6px 0;color:var(--muted);">Hint: ${hint}</p>`
+  );
+}
+
+function trackProgress(id, isCorrect, askType) {
+  const cur = state.progress[id] || { c: 0, t: 0 };
+  cur.t += 1;
+  cur.c += isCorrect ? 1 : 0;
+  // per-ask buckets
+  cur[askType] = cur[askType] || { c: 0, t: 0 };
+  cur[askType].t += 1;
+  cur[askType].c += isCorrect ? 1 : 0;
+  state.progress[id] = cur;
+}
+
+function pushHistory(isCorrect) {
+  state.history.push(isCorrect);
+  if (state.history.length > 20) state.history.shift();
+}
+
+function loadProgress() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("sigchi-progress") || "{}");
+    state.progress = saved.progress || {};
+    state.history = saved.history || [];
+    state.theme = saved.theme || "dark";
+    if (state.theme === "light") document.body.classList.add("theme-light");
+    els.btnTheme.textContent = state.theme === "light" ? "Toggle Dark" : "Toggle Light";
+  } catch (e) {
+    state.progress = {};
+    state.history = [];
+  }
+}
+
+function saveProgress() {
+  localStorage.setItem(
+    "sigchi-progress",
+    JSON.stringify({ progress: state.progress, history: state.history, theme: state.theme })
+  );
+}
+
+function renderDash() {
+  // per-mode accuracy based on ask types
+  const modes = ["major", "home", "middle", "last"];
+  els.modeAccuracy.innerHTML = "";
+  modes.forEach(m => {
+    const attempts = pledges.reduce((sum, p) => sum + ((state.progress[p.id]?.[m]?.t) || 0), 0);
+    const correct = pledges.reduce((sum, p) => sum + ((state.progress[p.id]?.[m]?.c) || 0), 0);
+    const acc = attempts ? Math.round((correct / attempts) * 100) : "—";
+    const div = document.createElement("div");
+    div.className = "badge";
+    div.textContent = `${m.toUpperCase()}: ${acc === "—" ? "—" : acc + "%"}`;
+    els.modeAccuracy.appendChild(div);
+  });
+
+  // hardest names (lowest accuracy)
+  const ranked = pledges
+    .map(p => {
+      const stats = state.progress[p.id] || { c: 0, t: 0 };
+      const acc = stats.t ? stats.c / stats.t : 1;
+      return { p, acc, t: stats.t };
+    })
+    .filter(x => x.t >= 3 && x.acc < 0.9)
+    .sort((a, b) => a.acc - b.acc)
+    .slice(0, 5);
+  els.hardest.innerHTML = "";
+  if (!ranked.length) {
+    els.hardest.innerHTML = '<span class="meta" style="color:var(--muted);">No weak spots detected yet.</span>';
+  } else {
+    ranked.forEach(r => {
+      const div = document.createElement("div");
+      div.className = "badge";
+      div.textContent = `${r.p.first} ${r.p.last}: ${Math.round(r.acc * 100)}% (${r.t} tries)`;
+      els.hardest.appendChild(div);
+    });
+  }
+}
+
+function toggleTheme() {
+  const body = document.body;
+  const isLight = body.classList.toggle("theme-light");
+  state.theme = isLight ? "light" : "dark";
+  els.btnTheme.textContent = isLight ? "Toggle Dark" : "Toggle Light";
+  saveProgress();
+}
+
+function celebrate() {
+  // simple confetti burst
+  const colors = ["#f5c34c", "#1f5fff", "#ffffff"];
+  for (let i = 0; i < 12; i++) {
+    const piece = document.createElement("div");
+    piece.style.position = "fixed";
+    piece.style.width = "6px";
+    piece.style.height = "10px";
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.left = `${window.innerWidth / 2}px`;
+    piece.style.top = `${window.innerHeight / 3}px`;
+    piece.style.opacity = "0.9";
+    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+    piece.style.transition = "transform 700ms ease, opacity 700ms ease, top 700ms ease";
+    document.body.appendChild(piece);
+    requestAnimationFrame(() => {
+      piece.style.top = `${window.innerHeight}px`;
+      piece.style.opacity = "0";
+      piece.style.transform += ` translate(${(Math.random() - 0.5) * 200}px, 0px)`;
+    });
+    setTimeout(() => piece.remove(), 750);
+  }
+  // audio ping
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.frequency.value = 880;
+    o.type = "triangle";
+    g.gain.value = 0.12;
+    o.connect(g).connect(ctx.destination);
+    o.start();
+    g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25);
+    o.stop(ctx.currentTime + 0.25);
+  } catch (e) {
+    /* ignore */
+  }
+}
+
 function resolveAsk(mode) {
   if (mode === "mix") return randomAsk();
   if (mode === "major") return "major";
@@ -342,6 +502,29 @@ function resolveAsk(mode) {
   if (mode === "middle") return "middle";
   if (mode === "last") return "last";
   return "flash";
+}
+
+function weightedPick(previousId) {
+  const data = state.progress;
+  const weights = pledges.map(p => {
+    const stats = data[p.id] || { c: 0, t: 0 };
+    const attempts = stats.t || 0;
+    const correct = stats.c || 0;
+    const accuracy = attempts ? correct / attempts : 0;
+    const scarcityBonus = attempts < 2 ? 1.2 : 1;
+    const struggle = attempts ? (1 - accuracy) * 2 : 1.5;
+    const base = 1 + struggle + scarcityBonus;
+    return { p, w: base };
+  });
+  const total = weights.reduce((s, x) => s + x.w, 0);
+  let r = Math.random() * total;
+  let choice = weights[0].p;
+  for (const item of weights) {
+    if (item.p.id === previousId && pledges.length > 1) continue;
+    if (r < item.w) { choice = item.p; break; }
+    r -= item.w;
+  }
+  return choice;
 }
 
 init();

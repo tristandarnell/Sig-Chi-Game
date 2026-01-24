@@ -32,6 +32,9 @@
         <div><span>Streak</span><strong id="stat-streak">0 🔥</strong></div>
         <div><span>Rounds</span><strong id="stat-rounds">0</strong></div>
       </div>
+      <div class="toggles">
+        <button id="btn-theme" class="ghost small">Toggle Light</button>
+      </div>
     </header>
 
     <section class="game">
@@ -49,11 +52,25 @@
           <button id="btn-reveal" class="primary">Reveal</button>
           <button id="btn-next" class="ghost">Next ↻</button>
           <button id="btn-flip" class="ghost small">Flip Flash Side</button>
+          <button id="btn-hint" class="ghost small">Hint</button>
+          <button id="btn-sprint" class="ghost small">Sprint 60s</button>
           <div class="manual-score" id="manual-score">
             <button data-mark="got">I knew it ✅</button>
             <button data-mark="miss">Missed 🙃</button>
           </div>
         </div>
+
+      <section class="dash">
+        <div class="dash-card">
+          <p class="label">Per-Mode Accuracy</p>
+          <div class="mode-accuracy" id="mode-accuracy"></div>
+        </div>
+        <div class="dash-card">
+          <p class="label">Hardest Names (needs work)</p>
+          <div class="hardest" id="hardest"></div>
+        </div>
+      </section>
+
       </div>
 
       <aside class="sidebar">
