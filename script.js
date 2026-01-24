@@ -158,9 +158,9 @@ function renderCard() {
       : "Flashcard";
   els.askLabel.textContent = askText;
   els.reveal.classList.toggle("visible", state.revealed);
-  const showClue = mode !== "flash"; // hide clues in both flash sides
-  els.clue.style.display = showClue ? "inline-flex" : "none";
-  if (showClue) els.clue.textContent = `Clue • ${current.hometown} • ${current.major}`;
+  // Clues removed per request
+  els.clue.style.display = "none";
+  els.clue.textContent = "";
   els.btnFlip.style.display = mode === "flash" ? "inline-flex" : "none";
 
   if (mode === "flash") {
