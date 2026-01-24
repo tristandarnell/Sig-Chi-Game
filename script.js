@@ -136,12 +136,7 @@ function renderCard() {
       : fullName;
 
   els.name.textContent = masked;
-  const akaLine =
-    current.nick
-      ? `Goes by ${current.nick}`
-      : state.mode !== "flash" && current.middle
-      ? `Middle: ${current.middle}`
-      : "\u00a0";
+  const akaLine = current.nick ? `Goes by ${current.nick}` : "\u00a0";
   els.aka.textContent = akaLine;
 
   const askText =
