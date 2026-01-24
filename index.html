@@ -16,11 +16,12 @@
       <div>
         <p class="eyebrow">Sigma Chi • Spring Pledges</p>
         <h1>Pledge Memory Arcade</h1>
-        <p class="lede">A fast, colorful trainer to lock every name, hometown, and major into memory.</p>
         <div class="mode-buttons" role="group" aria-label="Game modes">
           <button class="chip active" data-mode="mix">Mix</button>
           <button class="chip" data-mode="major">Guess Major</button>
           <button class="chip" data-mode="home">Guess Hometown</button>
+          <button class="chip" data-mode="middle">Guess Middle</button>
+          <button class="chip" data-mode="last">Guess Last</button>
           <button class="chip" data-mode="flash">Flashcards</button>
         </div>
       </div>
@@ -38,20 +39,14 @@
           <p class="name" id="name"></p>
           <p class="aka" id="aka"></p>
         </div>
+        <div class="clue" id="clue"></div>
+        <div class="prompt" id="prompt"></div>
         <div class="options" id="options"></div>
-        <div class="reveal" id="reveal">
-          <div>
-            <p class="label">Hometown</p>
-            <p class="value" id="home"></p>
-          </div>
-          <div>
-            <p class="label">Major</p>
-            <p class="value" id="major"></p>
-          </div>
-        </div>
+        <div class="reveal" id="reveal"></div>
         <div class="actions">
           <button id="btn-reveal" class="primary">Reveal</button>
           <button id="btn-next" class="ghost">Next ↻</button>
+          <button id="btn-flip" class="ghost small">Flip Flash Side</button>
           <div class="manual-score" id="manual-score">
             <button data-mark="got">I knew it ✅</button>
             <button data-mark="miss">Missed 🙃</button>

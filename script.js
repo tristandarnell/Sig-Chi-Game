@@ -44,19 +44,21 @@ const state = {
   current: null,
   revealed: false,
   locked: false,
-  stats: { correct: 0, total: 0, streak: 0 }
+  stats: { correct: 0, total: 0, streak: 0 },
+  flashSide: "name-first" // or "details-first"
 };
 
 const els = {
   name: document.getElementById("name"),
   aka: document.getElementById("aka"),
-  home: document.getElementById("home"),
-  major: document.getElementById("major"),
   options: document.getElementById("options"),
   reveal: document.getElementById("reveal"),
   askLabel: document.getElementById("ask-label"),
+  clue: document.getElementById("clue"),
+  prompt: document.getElementById("prompt"),
   btnReveal: document.getElementById("btn-reveal"),
   btnNext: document.getElementById("btn-next"),
+  btnFlip: document.getElementById("btn-flip"),
   manualScore: document.getElementById("manual-score"),
   statAccuracy: document.getElementById("stat-accuracy"),
   statStreak: document.getElementById("stat-streak"),
@@ -72,6 +74,7 @@ function init() {
   );
   els.btnReveal.addEventListener("click", reveal);
   els.btnNext.addEventListener("click", () => pickCard());
+  els.btnFlip.addEventListener("click", flipFlash);
   els.manualScore.addEventListener("click", e => {
     if (e.target.dataset.mark) {
       const isCorrect = e.target.dataset.mark === "got";
@@ -94,7 +97,7 @@ function init() {
 
 function switchMode(mode) {
   state.mode = mode;
-  state.ask = mode === "mix" ? randomAsk() : mode === "major" ? "major" : mode === "home" ? "home" : "flash";
+  state.ask = resolveAsk(mode);
   els.modeButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.mode === mode));
   pickCard();
 }
@@ -110,7 +113,7 @@ function pickCard(firstLoad = false) {
   }
 
   state.current = candidate;
-  state.ask = state.mode === "mix" ? randomAsk() : state.mode === "major" ? "major" : state.mode === "home" ? "home" : "flash";
+  state.ask = resolveAsk(state.mode);
   state.revealed = false;
   state.locked = false;
 
@@ -122,20 +125,66 @@ function renderCard() {
   const { current, ask, mode } = state;
   if (!current) return;
 
-  els.name.textContent = `${current.first} ${current.middle ? current.middle + " " : ""}${current.last}`;
-  els.aka.textContent = current.nick ? `Goes by ${current.nick}` : current.middle ? `Middle: ${current.middle}` : "\u00a0";
-  els.home.textContent = current.hometown;
-  els.major.textContent = current.major;
+  const fullName = `${current.first} ${current.middle ? current.middle + " " : ""}${current.last}`;
+  const masked =
+    ask === "last"
+      ? `${current.first} ${current.middle ? current.middle + " " : ""}`.trim()
+      : ask === "middle"
+      ? `${current.first} ${current.last}`
+      : state.mode === "flash" && state.flashSide === "details-first" && !state.revealed
+      ? "Who is it?"
+      : fullName;
+
+  els.name.textContent = masked;
+  const akaLine =
+    current.nick
+      ? `Goes by ${current.nick}`
+      : state.mode !== "flash" && current.middle
+      ? `Middle: ${current.middle}`
+      : "\u00a0";
+  els.aka.textContent = akaLine;
 
   const askText =
-    ask === "major" ? "Guess the major" : ask === "home" ? "Guess the hometown" : "Flashcard";
+    ask === "major"
+      ? "Guess the major"
+      : ask === "home"
+      ? "Guess the hometown"
+      : ask === "middle"
+      ? "Guess the middle name"
+      : ask === "last"
+      ? "Guess the last name"
+      : state.flashSide === "details-first"
+      ? "Given hometown + major, who is it?"
+      : "Flashcard";
   els.askLabel.textContent = askText;
   els.reveal.classList.toggle("visible", state.revealed);
+  const showClue = mode !== "flash"; // hide clues in both flash sides
+  els.clue.style.display = showClue ? "inline-flex" : "none";
+  if (showClue) els.clue.textContent = `Clue • ${current.hometown} • ${current.major}`;
+  els.btnFlip.style.display = mode === "flash" ? "inline-flex" : "none";
 
   if (mode === "flash") {
+    if (state.flashSide === "details-first") {
+      els.prompt.style.display = "grid";
+      els.prompt.innerHTML = `
+        <div>
+          <p class="label">Hometown</p>
+          <p class="value">${current.hometown}</p>
+        </div>
+        <div>
+          <p class="label">Major</p>
+          <p class="value">${current.major}</p>
+        </div>`;
+    } else {
+      els.prompt.style.display = "none";
+      els.prompt.innerHTML = "";
+    }
+
     els.options.innerHTML = `<p class="value" style="color: var(--muted); margin: 8px 0;">Flash mode: hit Reveal (or space) then score yourself.</p>`;
     els.manualScore.style.display = "flex";
   } else {
+    els.prompt.style.display = "none";
+    els.prompt.innerHTML = "";
     els.manualScore.style.display = "none";
     const choices = buildChoices(ask);
     els.options.innerHTML = "";
@@ -150,9 +199,16 @@ function renderCard() {
 }
 
 function buildChoices(kind) {
-  const key = kind === "home" ? "hometown" : "major";
-  const correct = state.current[key];
-  const pool = [...new Set(pledges.map(p => p[key]))];
+  const key =
+    kind === "home"
+      ? "hometown"
+      : kind === "major"
+      ? "major"
+      : kind === "middle"
+      ? "middle"
+      : "last";
+  const correct = state.current[key] || "—";
+  const pool = [...new Set(pledges.map(p => p[key] || "—"))];
   const picked = new Set([correct]);
   while (picked.size < Math.min(4, pool.length)) {
     const candidate = pool[Math.floor(Math.random() * pool.length)];
@@ -163,8 +219,15 @@ function buildChoices(kind) {
 
 function handleChoice(btn, choice) {
   if (state.locked) return;
-  const key = state.ask === "home" ? "hometown" : "major";
-  const correct = state.current[key];
+  const key =
+    state.ask === "home"
+      ? "hometown"
+      : state.ask === "major"
+      ? "major"
+      : state.ask === "middle"
+      ? "middle"
+      : "last";
+  const correct = state.current[key] || "—";
   const wasCorrect = choice === correct;
 
   document.querySelectorAll(".option-btn").forEach(b => {
@@ -181,6 +244,12 @@ function handleChoice(btn, choice) {
 function reveal() {
   if (state.revealed) return;
   state.revealed = true;
+  if (state.mode === "flash" && state.flashSide === "details-first") {
+    renderRevealName();
+  }
+  if (state.mode !== "flash" || state.flashSide === "name-first") {
+    renderRevealDetails();
+  }
   els.reveal.classList.add("visible");
 }
 
@@ -226,7 +295,45 @@ function shuffle(arr) {
 }
 
 function randomAsk() {
-  return Math.random() > 0.5 ? "major" : "home";
+  const asks = ["major", "home", "middle", "last"];
+  return asks[Math.floor(Math.random() * asks.length)];
+}
+
+function renderRevealDetails() {
+  els.reveal.innerHTML = `
+    <div>
+      <p class="label">Hometown</p>
+      <p class="value">${state.current.hometown}</p>
+    </div>
+    <div>
+      <p class="label">Major</p>
+      <p class="value">${state.current.major}</p>
+    </div>`;
+}
+
+function renderRevealName() {
+  const fullName = `${state.current.first} ${state.current.middle ? state.current.middle + " " : ""}${state.current.last}`;
+  els.reveal.innerHTML = `
+    <div>
+      <p class="label">Name</p>
+      <p class="value">${fullName}</p>
+    </div>`;
+}
+
+function flipFlash() {
+  state.flashSide = state.flashSide === "name-first" ? "details-first" : "name-first";
+  state.revealed = false;
+  els.reveal.classList.remove("visible");
+  renderCard();
+}
+
+function resolveAsk(mode) {
+  if (mode === "mix") return randomAsk();
+  if (mode === "major") return "major";
+  if (mode === "home") return "home";
+  if (mode === "middle") return "middle";
+  if (mode === "last") return "last";
+  return "flash";
 }
 
 init();
