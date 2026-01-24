@@ -1,41 +1,41 @@
 const pledges = [
-  { id: 1, first: "Aarav", last: "Mehta", hometown: "Lagos, Nigeria", major: "Economics" },
-  { id: 2, first: "Adi", last: "Bala", hometown: "Potomac, MD", major: "Political Science" },
-  { id: 3, first: "Alex", middle: "Dao Ming", last: "Chang", hometown: "New York City, NY", major: "Economics" },
-  { id: 4, first: "Allen", middle: "Allen", last: "Hutchinson", hometown: "Greenville, NC", major: "Mathematics" },
-  { id: 5, first: "Amar", middle: "Singh", last: "Walia", hometown: "New Orleans, LA", major: "Economics" },
-  { id: 6, first: "Andrew", middle: "Harrison", last: "Jaynes", hometown: "New City, NY", major: "Computer Science" },
-  { id: 7, first: "Arihant", last: "Rajesh", hometown: "Old Tappan, NJ", major: "Electrical & Computer Engineering" },
-  { id: 8, first: "Carter", middle: "Michael", last: "Burke", hometown: "Houston, TX", major: "Statistics & Economics" },
+  { id: 1, first: "Aarav", last: "Mehta", hometown: "Lagos, Nigeria", major: "Economics", image: "Images/Aarav Mehta.jpeg" },
+  { id: 2, first: "Adi", last: "Bala", hometown: "Potomac, MD", major: "Political Science", image: "Images/Adi Bala.jpeg" },
+  { id: 3, first: "Alex", middle: "Dao Ming", last: "Chang", hometown: "New York City, NY", major: "Economics", image: "Images/Alex Chang.jpeg" },
+  { id: 4, first: "Allen", middle: "Allen", last: "Hutchinson", hometown: "Greenville, NC", major: "Mathematics", image: "Images/Allen Hutchinson.jpeg" },
+  { id: 5, first: "Amar", middle: "Singh", last: "Walia", hometown: "New Orleans, LA", major: "Economics", image: "Images/Amar Walia.jpeg" },
+  { id: 6, first: "Andrew", middle: "Harrison", last: "Jaynes", hometown: "New City, NY", major: "Computer Science", image: "Images/Andrew Jaynes.jpeg" },
+  { id: 7, first: "Arihant", last: "Rajesh", hometown: "Old Tappan, NJ", major: "Electrical & Computer Engineering", image: "Images/Arihant Rajesh.png" },
+  { id: 8, first: "Carter", middle: "Michael", last: "Burke", hometown: "Houston, TX", major: "Statistics & Economics", image: "Images/Carter Burke.jpeg" },
   { id: 9, first: "Cole", middle: "Matthew", last: "Burke", hometown: "Davison, MI", major: "Computer Science" },
-  { id: 10, first: "Coleson", middle: "Kennedy", last: "Kovacs", hometown: "Colorado Springs, CO", major: "Biomedical Engineering" },
-  { id: 11, first: "Danny", middle: "Reuben", last: "Kriegel", hometown: "Deerfield, IL", major: "Biomedical Engineering" },
-  { id: 12, first: "Evan", middle: "Michael", last: "Lehmann", hometown: "Waco, TX", major: "Economics" },
-  { id: 13, first: "Finn", last: "Kelly", hometown: "Villanova, PA", major: "Mathematics" },
-  { id: 14, first: "Grant", middle: "Hamilton", last: "Mayer", hometown: "Dover, MA", major: "Mathematics" },
-  { id: 15, first: "Ian", middle: "Jacob", last: "Anderson", hometown: "Knoxville, TN", major: "Biomedical Engineering" },
-  { id: 16, first: "Jack", middle: "Post", last: "Dahler", hometown: "Bernardsville, NJ", major: "Economics" },
-  { id: 17, first: "Jack", middle: "Tyler", last: "Khachatryan", hometown: "Salt Lake City, UT", major: "Biomedical Engineering" },
-  { id: 18, first: "Jack", middle: "Morgan", last: "Reed", hometown: "Arlington, VA", major: "Electrical & Computer Engineering" },
-  { id: 19, first: "Jacob", middle: "Thomas", last: "Kim", hometown: "Philadelphia, PA", major: "Economics" },
-  { id: 20, first: "Jerry", middle: "Lin", last: "Xu", hometown: "San Ramon, CA", major: "ECE / Computer Science" },
-  { id: 21, first: "Jonathan", middle: "Tyler", last: "Ransom", hometown: "Wilmington, DE", major: "Electrical & Computer Engineering" },
-  { id: 22, first: "Joseph", last: "Delgado", hometown: "Miami, FL", major: "Romance Studies" },
-  { id: 23, first: "Julien", middle: "Emanuel", last: "Halleman", hometown: "Annapolis, MD", major: "Political Science" },
-  { id: 24, first: "Leonardo", nick: "Leo", middle: "Yuchen", last: "Bai", hometown: "Nashville, TN", major: "Economics & Statistics" },
-  { id: 25, first: "Miles", middle: "Rocco", last: "Blackhart", hometown: "Berkeley, CA", major: "Economics" },
-  { id: 26, first: "Parker", middle: "Baird", last: "Wilding", hometown: "Sarasota, FL", major: "Mechanical Engineering" },
-  { id: 27, first: "Parker", middle: "Daisuke", last: "Hayashi", hometown: "Greenwich, CT", major: "Computer Science" },
-  { id: 28, first: "Parth", last: "Shah", hometown: "Mumbai, India", major: "Economics" },
-  { id: 29, first: "Paul", middle: "James", last: "Anderson", hometown: "Boise, ID", major: "Biology" },
-  { id: 30, first: "Quinn", last: "Quinn", hometown: "Siler City, NC", major: "Mechanical Engineering" },
-  { id: 31, first: "Rishi", middle: "Anil", last: "Kawediya", hometown: "Folsom, CA", major: "Economics" },
-  { id: 32, first: "Ryan", middle: "Christopher", last: "Growney", hometown: "New York City, NY", major: "Mathematics" },
-  { id: 33, first: "Ryan", middle: "Hale", last: "Readlinger", hometown: "Chatham, NJ", major: "Biology" },
-  { id: 34, first: "Tristan", middle: "Alexander", last: "Darnell", hometown: "Orlando, FL", major: "Computer Science" },
-  { id: 35, first: "Vincent", last: "Luna", hometown: "Scottsdale, AZ", major: "Mechanical Engineering" },
-  { id: 36, first: "Will", middle: "Angas", last: "Pertsemlidis", hometown: "Morristown, NJ", major: "Undecided" },
-  { id: 37, first: "Owen", last: "Casey", hometown: "Brooklyn, NY", major: "Statistics & Political Economy" }
+  { id: 10, first: "Coleson", middle: "Kennedy", last: "Kovacs", hometown: "Colorado Springs, CO", major: "Biomedical Engineering", image: "Images/Coleson Kovacs.jpeg" },
+  { id: 11, first: "Danny", middle: "Reuben", last: "Kriegel", hometown: "Deerfield, IL", major: "Biomedical Engineering", image: "Images/Daniel Kriegal.jpeg" },
+  { id: 12, first: "Evan", middle: "Michael", last: "Lehmann", hometown: "Waco, TX", major: "Economics", image: "Images/Evan Lehmann.jpeg" },
+  { id: 13, first: "Finn", last: "Kelly", hometown: "Villanova, PA", major: "Mathematics", image: "Images/Finn Kelly.jpeg" },
+  { id: 14, first: "Grant", middle: "Hamilton", last: "Mayer", hometown: "Dover, MA", major: "Mathematics", image: "Images/Grant Mayer.jpeg" },
+  { id: 15, first: "Ian", middle: "Jacob", last: "Anderson", hometown: "Knoxville, TN", major: "Biomedical Engineering", image: "Images/Ian Anderson.jpeg" },
+  { id: 16, first: "Jack", middle: "Post", last: "Dahler", hometown: "Bernardsville, NJ", major: "Economics", image: "Images/Jack Dahler.jpeg" },
+  { id: 17, first: "Jack", middle: "Tyler", last: "Khachatryan", hometown: "Salt Lake City, UT", major: "Biomedical Engineering", image: "Images/Jack Khachatryan.jpeg" },
+  { id: 18, first: "Jack", middle: "Morgan", last: "Reed", hometown: "Arlington, VA", major: "Electrical & Computer Engineering", image: "Images/Jack Reed.jpeg" },
+  { id: 19, first: "Jacob", middle: "Thomas", last: "Kim", hometown: "Philadelphia, PA", major: "Economics", image: "Images/Jacob Kim.jpeg" },
+  { id: 20, first: "Jerry", middle: "Lin", last: "Xu", hometown: "San Ramon, CA", major: "ECE / Computer Science", image: "Images/Jerry Xu.png" },
+  { id: 21, first: "Jonathan", middle: "Tyler", last: "Ransom", hometown: "Wilmington, DE", major: "Electrical & Computer Engineering", image: "Images/Jonathan Ransom.jpeg" },
+  { id: 22, first: "Joseph", last: "Delgado", hometown: "Miami, FL", major: "Romance Studies", image: "Images/Joseph Delgado.jpeg" },
+  { id: 23, first: "Julien", middle: "Emanuel", last: "Halleman", hometown: "Annapolis, MD", major: "Political Science", image: "Images/Julian Halleman.jpeg" },
+  { id: 24, first: "Leonardo", nick: "Leo", middle: "Yuchen", last: "Bai", hometown: "Nashville, TN", major: "Economics & Statistics", image: "Images/Leo Bai.jpeg" },
+  { id: 25, first: "Miles", middle: "Rocco", last: "Blackhart", hometown: "Berkeley, CA", major: "Economics", image: "Images/Miles Blackhart.jpeg" },
+  { id: 26, first: "Parker", middle: "Baird", last: "Wilding", hometown: "Sarasota, FL", major: "Mechanical Engineering", image: "Images/Parker Wilding.jpeg" },
+  { id: 27, first: "Parker", middle: "Daisuke", last: "Hayashi", hometown: "Greenwich, CT", major: "Computer Science", image: "Images/Parker Hayashi.jpeg" },
+  { id: 28, first: "Parth", last: "Shah", hometown: "Mumbai, India", major: "Economics", image: "Images/Parth Shah.jpeg" },
+  { id: 29, first: "Paul", middle: "James", last: "Anderson", hometown: "Boise, ID", major: "Biology", image: "Images/Paul Anderson.jpeg" },
+  { id: 30, first: "Quinn", last: "Quinn", hometown: "Siler City, NC", major: "Mechanical Engineering", image: "Images/Quinn.jpeg" },
+  { id: 31, first: "Rishi", middle: "Anil", last: "Kawediya", hometown: "Folsom, CA", major: "Economics", image: "Images/Rishi Kaweiya.jpeg" },
+  { id: 32, first: "Ryan", middle: "Christopher", last: "Growney", hometown: "New York City, NY", major: "Mathematics", image: "Images/Ryan Growney.jpeg" },
+  { id: 33, first: "Ryan", middle: "Hale", last: "Readlinger", hometown: "Chatham, NJ", major: "Biology", image: "Images/Ryan Readlinger.jpeg" },
+  { id: 34, first: "Tristan", middle: "Alexander", last: "Darnell", hometown: "Orlando, FL", major: "Computer Science", image: "Images/Tristan Darnell.jpeg" },
+  { id: 35, first: "Vincent", last: "Luna", hometown: "Scottsdale, AZ", major: "Mechanical Engineering", image: "Images/Vincent Luna.jpeg" },
+  { id: 36, first: "Will", middle: "Angas", last: "Pertsemlidis", hometown: "Morristown, NJ", major: "Undecided", image: "Images/Will Persemlidis.jpeg" },
+  { id: 37, first: "Owen", last: "Casey", hometown: "Brooklyn, NY", major: "Statistics & Political Economy", image: "Images/Owen Casey.jpeg" }
 ];
 
 const state = {
@@ -59,6 +59,8 @@ const els = {
   askLabel: document.getElementById("ask-label"),
   clue: document.getElementById("clue"),
   prompt: document.getElementById("prompt"),
+  photoWrap: document.getElementById("photo-wrap"),
+  photo: document.getElementById("photo"),
   btnReveal: document.getElementById("btn-reveal"),
   btnNext: document.getElementById("btn-next"),
   btnFlip: document.getElementById("btn-flip"),
@@ -123,7 +125,7 @@ function switchMode(mode) {
 
 function pickCard(firstLoad = false) {
   const previousId = state.current?.id;
-  const candidate = weightedPick(previousId);
+  const candidate = weightedPick(previousId, state.mode === "photo");
   const middles = pledges.filter(p => p.middle);
 
   state.current = candidate;
@@ -149,9 +151,11 @@ function renderCard() {
   if (!current) return;
   document.querySelectorAll(".hint-line").forEach(el => el.remove());
 
-  const fullName = `${current.first} ${current.middle ? current.middle + " " : ""}${current.last}`;
+  const fullName = displayName(current);
   const masked =
-    ask === "last"
+    state.mode === "photo"
+      ? "Who is this?"
+      : ask === "last"
       ? `${current.first} ${current.middle ? current.middle + " " : ""}`.trim()
       : ask === "middle"
       ? `${current.first} ${current.last}`
@@ -160,7 +164,12 @@ function renderCard() {
       : fullName;
 
   els.name.textContent = masked;
-  const akaLine = current.nick ? `Goes by ${current.nick}` : "\u00a0";
+  const akaLine =
+    state.mode === "photo"
+      ? "Recall full name + major, then Reveal."
+      : current.nick
+      ? `Goes by ${current.nick}`
+      : "\u00a0";
   els.aka.textContent = akaLine;
 
   const askText =
@@ -172,6 +181,8 @@ function renderCard() {
       ? "Guess the middle name"
       : ask === "last"
       ? "Guess the last name"
+      : ask === "photo"
+      ? "Who is this? Pick name + major"
       : state.flashSide === "details-first"
       ? "Given hometown + major, who is it?"
       : "Flashcard";
@@ -181,6 +192,12 @@ function renderCard() {
   els.clue.style.display = "none";
   els.clue.textContent = "";
   els.btnFlip.style.display = mode === "flash" ? "inline-flex" : "none";
+  const showPhoto = mode === "photo" && current.image;
+  els.photoWrap.style.display = showPhoto ? "block" : "none";
+  if (showPhoto) {
+    els.photo.src = current.image;
+    els.photo.alt = `${fullName}'s photo`;
+  }
 
   if (mode === "flash") {
     if (state.flashSide === "details-first") {
@@ -201,11 +218,16 @@ function renderCard() {
 
     els.options.innerHTML = `<p class="value" style="color: var(--muted); margin: 8px 0;">Flash mode: hit Reveal (or space) then score yourself.</p>`;
     els.manualScore.style.display = "flex";
+  } else if (mode === "photo") {
+    els.prompt.style.display = "none";
+    els.prompt.innerHTML = "";
+    els.manualScore.style.display = "flex";
+    els.options.innerHTML = `<p class="value" style="color: var(--muted); margin: 8px 0;">Look at the photo, recall full name + major, then press Reveal and score yourself.</p>`;
   } else {
     els.prompt.style.display = "none";
     els.prompt.innerHTML = "";
     els.manualScore.style.display = "none";
-    const choices = buildChoices(ask);
+    const choices = mode === "photo" ? buildPhotoChoices() : buildChoices(ask);
     els.options.innerHTML = "";
     choices.forEach(choice => {
       const btn = document.createElement("button");
@@ -238,17 +260,34 @@ function buildChoices(kind) {
   return shuffle([...picked]);
 }
 
+function buildPhotoChoices() {
+  const pool = pledges.filter(p => p.image);
+  const correct = `${displayName(state.current)} — ${state.current.major}`;
+  const picked = new Set([correct]);
+  while (picked.size < Math.min(4, pool.length)) {
+    const candidate = pool[Math.floor(Math.random() * pool.length)];
+    picked.add(`${displayName(candidate)} — ${candidate.major}`);
+  }
+  return shuffle([...picked]);
+}
+
 function handleChoice(btn, choice) {
   if (state.locked) return;
-  const key =
-    state.ask === "home"
-      ? "hometown"
-      : state.ask === "major"
-      ? "major"
-      : state.ask === "middle"
-      ? "middle"
-      : "last";
-  const correct = state.current[key] || "—";
+  if (state.mode === "photo") return; // photo mode is manual score only
+  let correct;
+  if (state.ask === "photo") {
+    correct = `${displayName(state.current)} — ${state.current.major}`;
+  } else {
+    const key =
+      state.ask === "home"
+        ? "hometown"
+        : state.ask === "major"
+        ? "major"
+        : state.ask === "middle"
+        ? "middle"
+        : "last";
+    correct = state.current[key] || "—";
+  }
   const wasCorrect = choice === correct;
 
   document.querySelectorAll(".option-btn").forEach(b => {
@@ -268,7 +307,9 @@ function reveal() {
   if (state.mode === "flash" && state.flashSide === "details-first") {
     renderRevealName();
   }
-  if (state.mode !== "flash" || state.flashSide === "name-first") {
+  if (state.mode === "photo") {
+    renderRevealPhoto();
+  } else if (state.mode !== "flash" || state.flashSide === "name-first") {
     renderRevealDetails();
   }
   els.reveal.classList.add("visible");
@@ -325,6 +366,10 @@ function randomAsk() {
   return asks[Math.floor(Math.random() * asks.length)];
 }
 
+function displayName(p) {
+  return `${p.first} ${p.middle ? p.middle + " " : ""}${p.last}`.trim();
+}
+
 function renderRevealDetails() {
   els.reveal.innerHTML = `
     <div>
@@ -334,6 +379,22 @@ function renderRevealDetails() {
     <div>
       <p class="label">Major</p>
       <p class="value">${state.current.major}</p>
+    </div>`;
+}
+
+function renderRevealPhoto() {
+  els.reveal.innerHTML = `
+    <div>
+      <p class="label">Name</p>
+      <p class="value">${displayName(state.current)}</p>
+    </div>
+    <div>
+      <p class="label">Major</p>
+      <p class="value">${state.current.major}</p>
+    </div>
+    <div>
+      <p class="label">Hometown</p>
+      <p class="value">${state.current.hometown}</p>
     </div>`;
 }
 
@@ -354,7 +415,7 @@ function flipFlash() {
 }
 
 function showHint() {
-  if (!state.current || state.mode === "flash") return;
+  if (!state.current || state.mode === "flash" || state.mode === "photo") return;
   document.querySelectorAll(".hint-line").forEach(el => el.remove());
   const key =
     state.ask === "home"
@@ -501,12 +562,14 @@ function resolveAsk(mode) {
   if (mode === "home") return "home";
   if (mode === "middle") return "middle";
   if (mode === "last") return "last";
+  if (mode === "photo") return "photo";
   return "flash";
 }
 
-function weightedPick(previousId) {
+function weightedPick(previousId, requirePhoto = false) {
   const data = state.progress;
-  const weights = pledges.map(p => {
+  const pool = requirePhoto ? pledges.filter(p => p.image) : pledges;
+  const weights = pool.map(p => {
     const stats = data[p.id] || { c: 0, t: 0 };
     const attempts = stats.t || 0;
     const correct = stats.c || 0;
@@ -520,7 +583,7 @@ function weightedPick(previousId) {
   let r = Math.random() * total;
   let choice = weights[0].p;
   for (const item of weights) {
-    if (item.p.id === previousId && pledges.length > 1) continue;
+    if (item.p.id === previousId && pool.length > 1) continue;
     if (r < item.w) { choice = item.p; break; }
     r -= item.w;
   }
