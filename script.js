@@ -105,6 +105,7 @@ function switchMode(mode) {
 function pickCard(firstLoad = false) {
   const previousId = state.current?.id;
   let candidate = pledges[Math.floor(Math.random() * pledges.length)];
+  const middles = pledges.filter(p => p.middle);
   // avoid repeat if possible
   if (pledges.length > 1) {
     while (candidate.id === previousId) {
@@ -114,6 +115,16 @@ function pickCard(firstLoad = false) {
 
   state.current = candidate;
   state.ask = resolveAsk(state.mode);
+  // If we're asking for a middle name but this pledge doesn't have one, pick someone who does.
+  if (state.ask === "middle" && (!state.current.middle || state.current.middle.trim() === "")) {
+    if (middles.length) {
+      const alt = middles[Math.floor(Math.random() * middles.length)];
+      state.current = alt;
+    } else {
+      // fallback: no middles exist, switch to major
+      state.ask = "major";
+    }
+  }
   state.revealed = false;
   state.locked = false;
 
@@ -202,8 +213,10 @@ function buildChoices(kind) {
       : kind === "middle"
       ? "middle"
       : "last";
-  const correct = state.current[key] || "—";
-  const pool = [...new Set(pledges.map(p => p[key] || "—"))];
+  const correct = state.current[key];
+  const pool = [...new Set(pledges.map(p => p[key]).filter(Boolean))];
+  // ensure correct is included even if falsy guard somehow slipped
+  if (correct && !pool.includes(correct)) pool.push(correct);
   const picked = new Set([correct]);
   while (picked.size < Math.min(4, pool.length)) {
     const candidate = pool[Math.floor(Math.random() * pool.length)];
