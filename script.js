@@ -2,7 +2,7 @@ const pledges = [
   { id: 1, first: "Aarav", last: "Mehta", hometown: "Lagos, Nigeria", major: "Economics", image: "Images/Aarav Mehta.jpeg" },
   { id: 2, first: "Adi", last: "Bala", hometown: "Potomac, MD", major: "Political Science", image: "Images/Adi Bala.jpeg" },
   { id: 3, first: "Alex", middle: "Dao Ming", last: "Chang", hometown: "New York City, NY", major: "Economics", image: "Images/Alex Chang.jpeg" },
-  { id: 4, first: "Allen", middle: "Allen", last: "Hutchinson", hometown: "Greenville, NC", major: "Mathematics", image: "Images/Allen Hutchinson.jpeg" },
+  { id: 4, first: "Robert", middle: "Allen", last: "Hutchinson", hometown: "Greenville, NC", major: "Mathematics", image: "Images/Allen Hutchinson.jpeg" },
   { id: 5, first: "Amar", middle: "Singh", last: "Walia", hometown: "New Orleans, LA", major: "Economics", image: "Images/Amar Walia.jpeg" },
   { id: 6, first: "Andrew", middle: "Harrison", last: "Jaynes", hometown: "New City, NY", major: "Computer Science", image: "Images/Andrew Jaynes.jpeg" },
   { id: 7, first: "Arihant", last: "Rajesh", hometown: "Old Tappan, NJ", major: "Electrical & Computer Engineering", image: "Images/Arihant Rajesh.png" },
@@ -38,10 +38,38 @@ const pledges = [
   { id: 37, first: "Owen", last: "Casey", hometown: "Brooklyn, NY", major: "Statistics & Political Economy", image: "Images/Owen Casey.jpeg" }
 ];
 
+const greek = [
+  { id: "alpha", name: "Alpha", upper: "Α", lower: "α", sound: "AL-fa" },
+  { id: "beta", name: "Beta", upper: "Β", lower: "β", sound: "BAY-ta" },
+  { id: "gamma", name: "Gamma", upper: "Γ", lower: "γ", sound: "GAM-ma" },
+  { id: "delta", name: "Delta", upper: "Δ", lower: "δ", sound: "DEL-ta" },
+  { id: "epsilon", name: "Epsilon", upper: "Ε", lower: "ε", sound: "EP-si-lon" },
+  { id: "zeta", name: "Zeta", upper: "Ζ", lower: "ζ", sound: "ZAY-ta" },
+  { id: "eta", name: "Eta", upper: "Η", lower: "η", sound: "AY-ta" },
+  { id: "theta", name: "Theta", upper: "Θ", lower: "θ", sound: "THAY-ta" },
+  { id: "iota", name: "Iota", upper: "Ι", lower: "ι", sound: "eye-O-ta" },
+  { id: "kappa", name: "Kappa", upper: "Κ", lower: "κ", sound: "KAP-a" },
+  { id: "lambda", name: "Lambda", upper: "Λ", lower: "λ", sound: "LAM-da" },
+  { id: "mu", name: "Mu", upper: "Μ", lower: "μ", sound: "MEW" },
+  { id: "nu", name: "Nu", upper: "Ν", lower: "ν", sound: "NEW" },
+  { id: "xi", name: "Xi", upper: "Ξ", lower: "ξ", sound: "KSEE" },
+  { id: "omicron", name: "Omicron", upper: "Ο", lower: "ο", sound: "AH-mi-cron" },
+  { id: "pi", name: "Pi", upper: "Π", lower: "π", sound: "PIE" },
+  { id: "rho", name: "Rho", upper: "Ρ", lower: "ρ", sound: "ROE" },
+  { id: "sigma", name: "Sigma", upper: "Σ", lower: "σ/ς", sound: "SIG-ma" },
+  { id: "tau", name: "Tau", upper: "Τ", lower: "τ", sound: "TAH" },
+  { id: "upsilon", name: "Upsilon", upper: "Υ", lower: "υ", sound: "OOP-si-lon" },
+  { id: "phi", name: "Phi", upper: "Φ", lower: "φ", sound: "FEE" },
+  { id: "chi", name: "Chi", upper: "Χ", lower: "χ", sound: "KAI" },
+  { id: "psi", name: "Psi", upper: "Ψ", lower: "ψ", sound: "PSY" },
+  { id: "omega", name: "Omega", upper: "Ω", lower: "ω", sound: "oh-MAY-ga" }
+];
+
 const state = {
   mode: "mix",
   ask: "major",
   current: null,
+  currentGreek: null,
   revealed: false,
   locked: false,
   stats: { correct: 0, total: 0, streak: 0 },
@@ -119,27 +147,41 @@ function init() {
 function switchMode(mode) {
   state.mode = mode;
   state.ask = resolveAsk(mode);
+  state.currentGreek = null;
   els.modeButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.mode === mode));
   pickCard();
 }
 
 function pickCard(firstLoad = false) {
-  const previousId = state.current?.id;
-  const candidate = weightedPick(previousId, state.mode === "photo");
-  const middles = pledges.filter(p => p.middle);
+  if (state.mode === "greek") {
+    const prev = state.currentGreek?.id;
+    let candidate = greek[Math.floor(Math.random() * greek.length)];
+    if (greek.length > 1) {
+      while (candidate.id === prev) candidate = greek[Math.floor(Math.random() * greek.length)];
+    }
+    state.currentGreek = candidate;
+    state.current = null;
+    state.ask = "greek";
+  } else {
+    const previousId = state.current?.id;
+    const candidate = weightedPick(previousId, state.mode === "photo");
+    const middles = pledges.filter(p => p.middle);
 
-  state.current = candidate;
-  state.ask = resolveAsk(state.mode);
-  // If we're asking for a middle name but this pledge doesn't have one, pick someone who does.
-  if (state.ask === "middle" && (!state.current.middle || state.current.middle.trim() === "")) {
-    if (middles.length) {
-      const alt = middles[Math.floor(Math.random() * middles.length)];
-      state.current = alt;
-    } else {
-      // fallback: no middles exist, switch to major
-      state.ask = "major";
+    state.current = candidate;
+    state.currentGreek = null;
+    state.ask = resolveAsk(state.mode);
+    // If we're asking for a middle name but this pledge doesn't have one, pick someone who does.
+    if (state.ask === "middle" && (!state.current.middle || state.current.middle.trim() === "")) {
+      if (middles.length) {
+        const alt = middles[Math.floor(Math.random() * middles.length)];
+        state.current = alt;
+      } else {
+        // fallback: no middles exist, switch to major
+        state.ask = "major";
+      }
     }
   }
+
   state.revealed = false;
   state.locked = false;
 
@@ -147,9 +189,32 @@ function pickCard(firstLoad = false) {
 }
 
 function renderCard() {
-  const { current, ask, mode } = state;
-  if (!current) return;
+  const { current, currentGreek, ask, mode } = state;
+  if (!current && mode !== "greek") return;
   document.querySelectorAll(".hint-line").forEach(el => el.remove());
+
+  if (mode === "greek") {
+    els.photoWrap.style.display = "none";
+    const glyph = `${currentGreek.upper} ${currentGreek.lower}`;
+    els.name.textContent = glyph;
+    els.aka.textContent = "Guess the Greek letter name";
+    els.askLabel.textContent = "Greek Alphabet";
+    els.reveal.classList.toggle("visible", state.revealed);
+    els.btnFlip.style.display = "none";
+    els.prompt.style.display = "none";
+    els.prompt.innerHTML = "";
+    els.manualScore.style.display = "none";
+    const choices = buildChoices("greek");
+    els.options.innerHTML = "";
+    choices.forEach(choice => {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.textContent = choice;
+      btn.addEventListener("click", () => handleChoice(btn, choice));
+      els.options.appendChild(btn);
+    });
+    return;
+  }
 
   const fullName = displayName(current);
   const masked =
@@ -183,6 +248,8 @@ function renderCard() {
       ? "Guess the last name"
       : ask === "photo"
       ? "Who is this? Pick name + major"
+      : ask === "greek"
+      ? "Guess the Greek letter name"
       : state.flashSide === "details-first"
       ? "Given hometown + major, who is it?"
       : "Flashcard";
@@ -247,7 +314,19 @@ function buildChoices(kind) {
       ? "major"
       : kind === "middle"
       ? "middle"
+      : kind === "greek"
+      ? "greek"
       : "last";
+  if (key === "greek") {
+    const correct = state.currentGreek.name;
+    const pool = [...new Set(greek.map(g => g.name))];
+    const picked = new Set([correct]);
+    while (picked.size < Math.min(4, pool.length)) {
+      const candidate = pool[Math.floor(Math.random() * pool.length)];
+      picked.add(candidate);
+    }
+    return shuffle([...picked]);
+  }
   const correct = state.current[key];
   const pool = [...new Set(pledges.map(p => p[key]).filter(Boolean))];
   // ensure correct is included even if falsy guard somehow slipped
@@ -277,6 +356,8 @@ function handleChoice(btn, choice) {
   let correct;
   if (state.ask === "photo") {
     correct = `${displayName(state.current)} — ${state.current.major}`;
+  } else if (state.ask === "greek") {
+    correct = state.currentGreek.name;
   } else {
     const key =
       state.ask === "home"
@@ -309,6 +390,8 @@ function reveal() {
   }
   if (state.mode === "photo") {
     renderRevealPhoto();
+  } else if (state.mode === "greek") {
+    renderRevealGreek();
   } else if (state.mode !== "flash" || state.flashSide === "name-first") {
     renderRevealDetails();
   }
@@ -398,6 +481,22 @@ function renderRevealPhoto() {
     </div>`;
 }
 
+function renderRevealGreek() {
+  els.reveal.innerHTML = `
+    <div>
+      <p class="label">Name</p>
+      <p class="value">${state.currentGreek.name}</p>
+    </div>
+    <div>
+      <p class="label">Upper / Lower</p>
+      <p class="value">${state.currentGreek.upper} ${state.currentGreek.lower}</p>
+    </div>
+    <div>
+      <p class="label">Pronunciation</p>
+      <p class="value">${state.currentGreek.sound}</p>
+    </div>`;
+}
+
 function renderRevealName() {
   const fullName = `${state.current.first} ${state.current.middle ? state.current.middle + " " : ""}${state.current.last}`;
   els.reveal.innerHTML = `
@@ -415,7 +514,7 @@ function flipFlash() {
 }
 
 function showHint() {
-  if (!state.current || state.mode === "flash" || state.mode === "photo") return;
+  if ((!state.current && state.mode !== "greek") || state.mode === "flash" || state.mode === "photo" || state.mode === "greek") return;
   document.querySelectorAll(".hint-line").forEach(el => el.remove());
   const key =
     state.ask === "home"
@@ -436,14 +535,16 @@ function showHint() {
 }
 
 function trackProgress(id, isCorrect, askType) {
-  const cur = state.progress[id] || { c: 0, t: 0 };
+  // Prefix Greek ids so they don't collide with pledge ids
+  const key = state.mode === "greek" ? `g-${id}` : id;
+  const cur = state.progress[key] || { c: 0, t: 0 };
   cur.t += 1;
   cur.c += isCorrect ? 1 : 0;
   // per-ask buckets
   cur[askType] = cur[askType] || { c: 0, t: 0 };
   cur[askType].t += 1;
   cur[askType].c += isCorrect ? 1 : 0;
-  state.progress[id] = cur;
+  state.progress[key] = cur;
 }
 
 function pushHistory(isCorrect) {
@@ -474,11 +575,22 @@ function saveProgress() {
 
 function renderDash() {
   // per-mode accuracy based on ask types
-  const modes = ["major", "home", "middle", "last"];
+  const modes = ["major", "home", "middle", "last", "greek"];
   els.modeAccuracy.innerHTML = "";
   modes.forEach(m => {
-    const attempts = pledges.reduce((sum, p) => sum + ((state.progress[p.id]?.[m]?.t) || 0), 0);
-    const correct = pledges.reduce((sum, p) => sum + ((state.progress[p.id]?.[m]?.c) || 0), 0);
+    let attempts = pledges.reduce((sum, p) => sum + ((state.progress[p.id]?.[m]?.t) || 0), 0);
+    let correct = pledges.reduce((sum, p) => sum + ((state.progress[p.id]?.[m]?.c) || 0), 0);
+    // add greek counts
+    if (m === "greek") {
+      const gAttempts = Object.entries(state.progress)
+        .filter(([k]) => k.startsWith("g-"))
+        .reduce((s, [, v]) => s + ((v[m]?.t) || 0), 0);
+      const gCorrect = Object.entries(state.progress)
+        .filter(([k]) => k.startsWith("g-"))
+        .reduce((s, [, v]) => s + ((v[m]?.c) || 0), 0);
+      attempts += gAttempts;
+      correct += gCorrect;
+    }
     const acc = attempts ? Math.round((correct / attempts) * 100) : "—";
     const div = document.createElement("div");
     div.className = "badge";
