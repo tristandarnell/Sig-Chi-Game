@@ -28,7 +28,7 @@ const pledges = [
   { id: 27, first: "Parker", middle: "Daisuke", last: "Hayashi", hometown: "Greenwich, CT", major: "Computer Science", image: "Images/Parker Hayashi.jpeg" },
   { id: 28, first: "Parth", last: "Shah", hometown: "Mumbai, India", major: "Economics", image: "Images/Parth Shah.jpeg" },
   { id: 29, first: "Paul", middle: "James", last: "Anderson", hometown: "Boise, ID", major: "Biology", image: "Images/Paul Anderson.jpeg" },
-  { id: 30, first: "Quinn", last: "Quinn", hometown: "Siler City, NC", major: "Mechanical Engineering", image: "Images/Quinn.jpeg" },
+  { id: 30, first: "Quinn", last: "Woolford", hometown: "Siler City, NC", major: "Mechanical Engineering", image: "Images/Quinn.jpeg" },
   { id: 31, first: "Rishi", middle: "Anil", last: "Kawediya", hometown: "Folsom, CA", major: "Economics", image: "Images/Rishi Kaweiya.jpeg" },
   { id: 32, first: "Ryan", middle: "Christopher", last: "Growney", hometown: "New York City, NY", major: "Mathematics", image: "Images/Ryan Growney.jpeg" },
   { id: 33, first: "Ryan", middle: "Hale", last: "Readlinger", hometown: "Chatham, NJ", major: "Biology", image: "Images/Ryan Readlinger.jpeg" },
