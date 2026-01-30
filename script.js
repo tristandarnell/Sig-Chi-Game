@@ -1,41 +1,35 @@
 const pledges = [
-  { id: 1, first: "Aarav", last: "Mehta", hometown: "Lagos, Nigeria", major: "Economics", image: "Images/Aarav Mehta.jpeg" },
-  { id: 2, first: "Adi", last: "Bala", hometown: "Potomac, MD", major: "Political Science", image: "Images/Adi Bala.jpeg" },
-  { id: 3, first: "Alex", middle: "Dao Ming", last: "Chang", hometown: "New York City, NY", major: "Economics", image: "Images/Alex Chang.jpeg" },
-  { id: 4, first: "Robert", middle: "Allen", last: "Hutchinson", hometown: "Greenville, NC", major: "Mathematics", image: "Images/Allen Hutchinson.jpeg" },
-  { id: 5, first: "Amar", middle: "Singh", last: "Walia", hometown: "New Orleans, LA", major: "Economics", image: "Images/Amar Walia.jpeg" },
-  { id: 6, first: "Andrew", middle: "Harrison", last: "Jaynes", hometown: "New City, NY", major: "Computer Science", image: "Images/Andrew Jaynes.jpeg" },
-  { id: 7, first: "Arihant", last: "Rajesh", hometown: "Old Tappan, NJ", major: "Electrical & Computer Engineering", image: "Images/Arihant Rajesh.png" },
-  { id: 8, first: "Carter", middle: "Michael", last: "Burke", hometown: "Houston, TX", major: "Statistics & Economics", image: "Images/Carter Burke.jpeg" },
-  { id: 9, first: "Cole", middle: "Matthew", last: "Burke", hometown: "Davison, MI", major: "Computer Science" },
-  { id: 10, first: "Coleson", middle: "Kennedy", last: "Kovacs", hometown: "Colorado Springs, CO", major: "Biomedical Engineering", image: "Images/Coleson Kovacs.jpeg" },
-  { id: 11, first: "Danny", middle: "Reuben", last: "Kriegel", hometown: "Deerfield, IL", major: "Biomedical Engineering", image: "Images/Daniel Kriegal.jpeg" },
-  { id: 12, first: "Evan", middle: "Michael", last: "Lehmann", hometown: "Waco, TX", major: "Economics", image: "Images/Evan Lehmann.jpeg" },
-  { id: 13, first: "Finn", last: "Kelly", hometown: "Villanova, PA", major: "Mathematics", image: "Images/Finn Kelly.jpeg" },
-  { id: 14, first: "Grant", middle: "Hamilton", last: "Mayer", hometown: "Dover, MA", major: "Mathematics", image: "Images/Grant Mayer.jpeg" },
-  { id: 15, first: "Ian", middle: "Jacob", last: "Anderson", hometown: "Knoxville, TN", major: "Biomedical Engineering", image: "Images/Ian Anderson.jpeg" },
-  { id: 16, first: "Jack", middle: "Post", last: "Dahler", hometown: "Bernardsville, NJ", major: "Economics", image: "Images/Jack Dahler.jpeg" },
-  { id: 17, first: "Jack", middle: "Tyler", last: "Khachatryan", hometown: "Salt Lake City, UT", major: "Biomedical Engineering", image: "Images/Jack Khachatryan.jpeg" },
-  { id: 18, first: "Jack", middle: "Morgan", last: "Reed", hometown: "Arlington, VA", major: "Electrical & Computer Engineering", image: "Images/Jack Reed.jpeg" },
-  { id: 19, first: "Jacob", middle: "Thomas", last: "Kim", hometown: "Philadelphia, PA", major: "Economics", image: "Images/Jacob Kim.jpeg" },
-  { id: 20, first: "Jerry", middle: "Lin", last: "Xu", hometown: "San Ramon, CA", major: "ECE / Computer Science", image: "Images/Jerry Xu.png" },
-  { id: 21, first: "Jonathan", middle: "Tyler", last: "Ransom", hometown: "Wilmington, DE", major: "Electrical & Computer Engineering", image: "Images/Jonathan Ransom.jpeg" },
-  { id: 22, first: "Joseph", last: "Delgado", hometown: "Miami, FL", major: "Romance Studies", image: "Images/Joseph Delgado.jpeg" },
-  { id: 23, first: "Julien", middle: "Emanuel", last: "Halleman", hometown: "Annapolis, MD", major: "Political Science", image: "Images/Julian Halleman.jpeg" },
-  { id: 24, first: "Leonardo", nick: "Leo", middle: "Yuchen", last: "Bai", hometown: "Nashville, TN", major: "Economics & Statistics", image: "Images/Leo Bai.jpeg" },
-  { id: 25, first: "Miles", middle: "Rocco", last: "Blackhart", hometown: "Berkeley, CA", major: "Economics", image: "Images/Miles Blackhart.jpeg" },
-  { id: 26, first: "Parker", middle: "Baird", last: "Wilding", hometown: "Sarasota, FL", major: "Mechanical Engineering", image: "Images/Parker Wilding.jpeg" },
-  { id: 27, first: "Parker", middle: "Daisuke", last: "Hayashi", hometown: "Greenwich, CT", major: "Computer Science", image: "Images/Parker Hayashi.jpeg" },
-  { id: 28, first: "Parth", last: "Shah", hometown: "Mumbai, India", major: "Economics", image: "Images/Parth Shah.jpeg" },
-  { id: 29, first: "Paul", middle: "James", last: "Anderson", hometown: "Boise, ID", major: "Biology", image: "Images/Paul Anderson.jpeg" },
-  { id: 30, first: "Quinn", last: "Woolford", hometown: "Siler City, NC", major: "Mechanical Engineering", image: "Images/Quinn.jpeg" },
-  { id: 31, first: "Rishi", middle: "Anil", last: "Kawediya", hometown: "Folsom, CA", major: "Economics", image: "Images/Rishi Kaweiya.jpeg" },
-  { id: 32, first: "Ryan", middle: "Christopher", last: "Growney", hometown: "New York City, NY", major: "Mathematics", image: "Images/Ryan Growney.jpeg" },
-  { id: 33, first: "Ryan", middle: "Hale", last: "Readlinger", hometown: "Chatham, NJ", major: "Biology", image: "Images/Ryan Readlinger.jpeg" },
-  { id: 34, first: "Tristan", middle: "Alexander", last: "Darnell", hometown: "Orlando, FL", major: "Computer Science", image: "Images/Tristan Darnell.jpeg" },
-  { id: 35, first: "Vincent", last: "Luna", hometown: "Scottsdale, AZ", major: "Mechanical Engineering", image: "Images/Vincent Luna.jpeg" },
-  { id: 36, first: "Will", middle: "Angas", last: "Pertsemlidis", hometown: "Morristown, NJ", major: "Undecided", image: "Images/Will Persemlidis.jpeg" },
-  { id: 37, first: "Owen", last: "Casey", hometown: "Brooklyn, NY", major: "Statistics & Political Economy", image: "Images/Owen Casey.jpeg" }
+  { id: 1, first: "Elliott", middle: "Nils", last: "Adams", hometown: "Marblehead, MA - 2028", major: "ECE", image: "Images/Elliott Adams.jpeg" },
+  { id: 2, first: "Dexter", middle: "Beck", last: "Barton", hometown: "New York City, NY - 2028", major: "Economics", image: "Images/Dexter Barton.jpeg" },
+  { id: 3, first: "Gavin", middle: "Andrew", last: "Benz", hometown: "Appleton, WI - 2028", major: "BME", image: "Images/Gavin Benz.jpeg" },
+  { id: 4, first: "Alex", middle: "Joon", last: "Boesch", hometown: "San Mateo, CA - 2028", major: "ME", image: "Images/Alex Boesch.jpeg" },
+  { id: 5, first: "Or", middle: "Rahamim", last: "Bruchim", hometown: "Boise, ID - 2028", major: "Neuroscience", image: "Images/Or Bruchim.jpeg" },
+  { id: 6, first: "Rylan", middle: "Scott", last: "Carper", hometown: "Dayton, OH - 2028", major: "ME", image: "Images/Rylan Carper.jpeg" },
+  { id: 7, first: "Jide", middle: "Dean", last: "Gbadamosi", hometown: "Jackson, NJ - 2027", major: "ECE", image: "Images/Jide Gbadamosi.jpeg" },
+  { id: 8, first: "Colin", middle: "Alexander", last: "Geier", hometown: "Hinsdale, IL - 2028", major: "Political Science", image: "Images/Colin Geier.jpeg" },
+  { id: 9, first: "Campbell", middle: "Alexander", last: "Henn", hometown: "Atlanta, GA - 2028", major: "Economics", image: "Images/Campbell Henn.jpeg" },
+  { id: 10, first: "Thomas", last: "Henry", hometown: "Fort Collins, CO - 2027", major: "Econ", image: "Images/Thomas Henry.jpeg" },
+  { id: 11, first: "Dylan", middle: "Fredrick", last: "Jeffries", hometown: "Pasadena, CA - 2028", major: "Philosophy", image: "Images/Dylan Jeffries.jpeg" },
+  { id: 12, first: "Alexander", middle: "Jeffrey", last: "Krol", hometown: "Cincinnati, OH - 2028", major: "ECE/Chemistry", image: "Images/Alexander Krol.jpeg" },
+  { id: 13, first: "Srikar", middle: "Sai", last: "Kunapuli", hometown: "Sterling, VA - 2028", major: "Math/CS", image: "Images/Srikar Kunapuli.jpeg" },
+  { id: 14, first: "Jammer", last: "La Barge", hometown: "White Marsh, PA - 2027", major: "Marine Science", image: "Images/Jammer La Barge.jpeg" },
+  { id: 15, first: "Jason", middle: "Benjamin", last: "Lilly", hometown: "Columbia, MD - 2028", major: "Stats", image: "Images/Jason Lilly.jpeg" },
+  { id: 16, first: "John", middle: "Gilmer", last: "Mebane", hometown: "Durham, NC - 2028", major: "ME", image: "Images/John Mebane.jpeg" },
+  { id: 17, first: "Connor", middle: "Daniel", last: "Melehan", hometown: "Nashville, TN - 2028", major: "Math/Philo", image: "Images/Connor Melehan.jpeg" },
+  { id: 18, first: "Neel", middle: "Ajay", last: "Nair", hometown: "Eugene, OR - 2028", major: "ECE", image: "Images/Neel Nair.jpeg" },
+  { id: 19, first: "Ian", middle: "Malcolm", last: "Opel", hometown: "Lansing, MI - 2028", major: "Pubpol/Polysci", image: "Images/Ian Opel.jpeg" },
+  { id: 20, first: "Phoenix", middle: "Danger", last: "Perkins", hometown: "Anchorage, AK - 2028", major: "ECE/CS", image: "Images/Phoenix Perkins.jpeg" },
+  { id: 21, first: "Danilo", middle: "Ignacio", last: "Rincon", hometown: "Chelsea, MA - 2027", major: "ECE", image: "Images/Danilo Rincon.jpeg" },
+  { id: 22, first: "Vassilios", middle: "Evangelos", last: "Ringas", hometown: "Glen Allen, VA - 2028", major: "ME", image: "Images/Vassilios Ringas.jpeg" },
+  { id: 23, first: "Tyler", middle: "Jacob", last: "Ruben", hometown: "Sarasota, FL - 2028", major: "Polisci", image: "Images/Tyler Ruben.jpeg" },
+  { id: 24, first: "Tyler", middle: "James", last: "Scaringella", hometown: "Holliston, MA - 2028", major: "CS", image: "Images/Tyler Scaringella.jpeg" },
+  { id: 25, first: "James", last: "Sohigian", hometown: "Wilmette, IL - 2028", major: "Math", image: "Images/James Sohigian.jpeg" },
+  { id: 26, first: "Ethan", middle: "Michael", last: "Taksey", hometown: "Annapolis, MD - 2028", major: "Neuroscience", image: "Images/Ethan Taksey.jpeg" },
+  { id: 27, first: "Christian", middle: "Giuseppe", last: "Testa", hometown: "Rockville, MD - 2027", major: "ME", image: "Images/Christian Testa.jpeg" },
+  { id: 28, first: "Harry", last: "Troy", hometown: "New York, NY - 2028", major: "Chem/Earth Sci", image: "Images/Harry Troy.jpeg" },
+  { id: 29, first: "Jakob", middle: "Tobin", last: "Unterlack", hometown: "Cherry Hill, NJ - 2028", major: "BME", image: "Images/Jakob Unterlack.jpeg" },
+  { id: 30, first: "Kevin", last: "Yuan", hometown: "Atlanta, GA - 2027", major: "ME", image: "Images/Kevin Yuan.jpeg" },
+  { id: 31, first: "Daniel", middle: "Lev", last: "Zeltser", hometown: "Wyckoff, NJ - 2028", major: "BME", image: "Images/Daniel Zeltser.jpeg" }
 ];
 
 const greek = [
@@ -241,7 +235,7 @@ function renderCard() {
     ask === "major"
       ? "Guess the major"
       : ask === "home"
-      ? "Guess the hometown"
+      ? "Guess the hometown and graduation year"
       : ask === "middle"
       ? "Guess the middle name"
       : ask === "last"
