@@ -1,4 +1,4 @@
-const pledges = [
+const defaultPledges = [
   { id: 1, first: "Elliott", middle: "Nils", last: "Adams", hometown: "Marblehead, MA - 2028", major: "ECE", image: "Images/Elliott Adams.jpeg" },
   { id: 2, first: "Dexter", middle: "Beck", last: "Barton", hometown: "New York City, NY - 2028", major: "Economics", image: "Images/Dexter Barton.jpeg" },
   { id: 3, first: "Gavin", middle: "Andrew", last: "Benz", hometown: "Appleton, WI - 2028", major: "BME", image: "Images/Gavin Benz.jpeg" },
@@ -31,6 +31,8 @@ const pledges = [
   { id: 30, first: "Kevin", last: "Yuan", hometown: "Atlanta, GA - 2027", major: "ME", image: "Images/Kevin Yuan.jpeg" },
   { id: 31, first: "Daniel", middle: "Lev", last: "Zeltser", hometown: "Wyckoff, NJ - 2028", major: "BME", image: "Images/Daniel Zeltser.jpeg" }
 ];
+
+const pledges = window.pledges || defaultPledges;
 
 const greek = [
   { id: "alpha", name: "Alpha", upper: "Α", lower: "α", sound: "AL-fa" },

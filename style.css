@@ -89,6 +89,17 @@ h1 {
   gap: 10px;
 }
 
+.year-nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 8px 0 6px;
+}
+
+.year-nav .chip {
+  text-decoration: none;
+}
+
 .crest-chip {
   display: inline-flex;
   align-items: center;
